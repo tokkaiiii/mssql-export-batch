@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: mssql-jdbc-export
+
+  # 1. 데이터베이스 설정 (MSSQL)
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://10.0.3.6:55915;databaseName=CLIP_EFORM_V2;encrypt=true;trustServerCertificate=true
+    username: arum
+    password: 1qw2#ER$!@
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+
+  # 2. 스프링 배치 설정
+  batch:
+    jdbc:
+      initialize-schema: never # 처음 실행 시 배치 메타데이터 테이블 자동 생성
+    job:
+      enabled: false # 서버 기동 시 배치가 바로 시작되지 않도록 설정 (스케줄러가 제어)
+
+  # 3. 로그 설정 (배치 쿼리 확인용)
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    org.springframework.batch: INFO
+    org.springframework.jdbc: DEBUG # SQL 쿼리 로그 확인 시 필요
